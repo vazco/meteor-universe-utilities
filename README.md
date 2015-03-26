@@ -85,6 +85,25 @@ but if function threw error or returned false. function will be not check as exe
 
 ```
 
+## Pseudo Interface
+Validates if object contains needed methods
+
+```
+//Create new instance, pass a list of needed methods
+var test = new Interface(['getName', 'getAge']);
+var properties = { getName: function(){ return 'Cristo'}, getAge: function(){ return 26; } };
+function Person(config) {
+	// Pass in the methods we are expecting,
+	// followed by Interface instance that we're checking against
+	test.ensureImplements(config);
+	//If all is ok, you can add them to "this"
+	_.extend(this, config);
+}
+```
+
+- `new UniUtils.Interface(array)` Creates a new Interface object, which defines the required methods.
+- `.ensureImplements(objectToCheck)` Checks an object literal containing methods that should be implemented.
+
 ## Recommended variables
 To better project organisation, this package provides following variables:
 
