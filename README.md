@@ -1,5 +1,11 @@
 # Universe Utilities
 
+## Installation
+
+```sh
+$ meteor add vazco:universe-utilities
+```
+
 UniUtils.set - Creates an empty object inside namespace if not existent.
 
 UniUtils.get - Returns nested property value.
