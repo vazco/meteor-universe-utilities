@@ -24,6 +24,9 @@ Template.registerHelper('formatDateMoment', function (v, format, tmpl) {
         console.warn('formatDateMoment: date argument is undefined');
         return false;
     }
+    if(v === null){
+        v = undefined;
+    }
     /* global moment: true */
     if (moment) {
         if (format && tmpl) {

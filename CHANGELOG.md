@@ -1,4 +1,9 @@
 
+====1.0.4====
+-------------
+- removed unnecessary dependency
+- fix for template helper 'formatDateMoment' current date if value is null
+
 ====1.0.3====
 -------------
 - removed third argument "isSilent" from UniUtils.get, now every call is safe

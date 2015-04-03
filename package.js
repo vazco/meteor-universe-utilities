@@ -1,13 +1,13 @@
 Package.describe({
     summary: 'Many awesome utilities',
     name: 'vazco:universe-utilities',
-    version: '1.0.3',
+    version: '1.0.4',
     git: 'https://github.com/vazco/meteor-universe-utilities'
 });
 
 Package.on_use(function (api) {
     api.versionsFrom(['METEOR@1.0.4']);
-    api.use(['templating', 'ui', 'blaze'], 'client');
+    api.use(['templating'], 'client');
     api.use([
         'underscore'
     ]);
