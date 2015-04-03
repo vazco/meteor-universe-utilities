@@ -1,4 +1,9 @@
 
+====1.0.3====
+-------------
+- removed third argument "isSilent" from UniUtils.get, now every call is safe
+
+
 ====1.0.2====
 -------------
 - added UniUtils.Interface
