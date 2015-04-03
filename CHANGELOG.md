@@ -1,4 +1,8 @@
 
+====1.0.5====
+-------------
+- deprecated function 'getUniUserObject'
+
 ====1.0.4====
 -------------
 - removed unnecessary dependency

@@ -1,7 +1,7 @@
 Package.describe({
     summary: 'Many awesome utilities',
     name: 'vazco:universe-utilities',
-    version: '1.0.4',
+    version: '1.0.5',
     git: 'https://github.com/vazco/meteor-universe-utilities'
 });
 
