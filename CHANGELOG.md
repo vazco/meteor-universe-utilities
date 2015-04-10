@@ -1,4 +1,8 @@
 
+====1.0.7====
+-------------
+- added method clearSpacebarsKwObject
+
 ====1.0.6====
 -------------
 - deprecated function 'getUniUserObject'
