@@ -214,3 +214,38 @@ Template.registerHelper('UniUtils', function() {
 Template.registerHelper('UniConfig', function() {
     return UniConfig;
 });
+
+/**
+ * It will extend current context with given arguments 
+ * @argument key/value pairs given as key=value or "key" value into helper function
+ * @return extendedContext {Object}
+ * 
+ * @example {{>templateName extendContext "key1" value1 "key2" value2}} or
+ * @example {{>templateName extendContext key1=value1 key2=value2}}
+ */ 
+Template.registerHelper('extendContext', function () {
+    var toBeExtended = {};
+    var extension = {};
+    var sliceFunc = Array.prototype.slice;
+    var hashKw = sliceFunc.call(arguments, -1)[0].hash;
+    var args = sliceFunc.call(arguments, 0, -1);
+    var argsLength = args.length;
+
+    if (argsLength % 2 !== 0) {
+        throw new Meteor.Error('uneven-params', 'Please provide pairs of key/value for extendContext helper.');
+    } else {
+        for (var i = 0; i < argsLength; ++i) {
+            extension[args[i]] = args[++i];
+        }
+    }
+
+    if (!_.isObject(this)) {
+        toBeExtended._originalContext = this;
+    } else {
+        toBeExtended = this;
+    }
+
+    var extendedContext = _.extend(toBeExtended, extension, hashKw);
+
+    return extendedContext;
+});
