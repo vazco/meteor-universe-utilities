@@ -1,4 +1,9 @@
 
+====1.1.2====
+-------------
+- added template helpers logTimeStart, logTimeEnd
+- changed template helpers log
+
 ====1.0.8====
 -------------
 - added method clearSpacebarsKwObject

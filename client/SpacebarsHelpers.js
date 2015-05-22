@@ -92,16 +92,25 @@ Template.registerHelper('and', function() {
  * @name Handlebars.log
  */
 Template.registerHelper('log', function () {
+    var tName = UniUtils.get(Template.instance(), 'view.name');
     if (arguments.length > 1) {
-        console.log('Value');
-        console.log('====================');
-        arguments.length = arguments.length - 1;
-        console.log.apply(console, arguments);
+        var args = Array.prototype.slice.call(arguments);
+        args.length = args.length - 1;
+        args.unshift('%c' + tName, 'background: #CEE7FC; color: #000');
+        console.log.apply(console, args);
     } else {
-        console.log('Current Context');
-        console.log('====================');
-        console.log(this);
+        console.log('%c' + tName, 'background: #C4CDD5; color: #000', 'Context:', this);
     }
+});
+
+Template.registerHelper('logTimeStart', function(text){
+    var tName = UniUtils.get(Template.instance(), 'view.name');
+    console.log('%c' + tName + ' time: '+text, 'background: #CEFCEA; color: #000');
+    console.time(text);
+});
+
+Template.registerHelper('logTimeEnd', function(text){
+    console.timeEnd(text);
 });
 
 /**
