@@ -1,22 +1,47 @@
 'use strict';
 
-Template.registerHelper('routeIs', function (routeName, params, tmpl) {
-    var router = Router.current();
-    if (!router || router.route.name !== routeName) {
-        return false;
-    }
+if(typeof FlowRouter === 'object'){ //Flow router support
 
-    var params_match = true;
-    if (tmpl !== undefined) {
-        _.each(params, function (value, name) {
-            if (router.params[name] !== value) {
-                params_match = false;
-            }
-        });
-    }
+    Template.registerHelper('routeIs', function (routeName, params, tmpl) {
+        var rName = FlowRouter.getRouteName();
+        if (rName !== routeName) {
+            return false;
+        }
 
-    return params_match;
-});
+        var params_match = true;
+        if (tmpl !== undefined) {
+            _.each(params, function (value, name) {
+                if (FlowRouter.getParam(name) !== value) {
+                    params_match = false;
+                }
+            });
+        }
+
+        return params_match;
+    });
+} else{ //iron router support 0.9 or 1.x
+
+    Template.registerHelper('routeIs', function (routeName, params, tmpl) {
+        var router = Router.current();
+        var rName = UniUtils.get(router, 'route') || {};
+        rName = rName.getName? rName.getName() : rName.name;
+        if (rName !== routeName) {
+            return false;
+        }
+
+        var params_match = true;
+        if (tmpl !== undefined) {
+            _.each(params, function (value, name) {
+                if (router.params[name] !== value) {
+                    params_match = false;
+                }
+            });
+        }
+
+        return params_match;
+    });
+}
+
 
 
 Template.registerHelper('formatDateMoment', function (v, format, tmpl) {

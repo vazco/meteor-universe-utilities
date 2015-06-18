@@ -1,4 +1,9 @@
 
+====1.1.5====
+-------------
+- routeIs support new iron router 1.0.x and flow router
+- small fixes
+
 ====1.1.2====
 -------------
 - added template helpers logTimeStart, logTimeEnd
