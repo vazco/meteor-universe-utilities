@@ -1,4 +1,8 @@
 
+====1.1.6====
+-------------
+- improvements for function getTemplateInstanceByDOM
+
 ====1.1.5====
 -------------
 - routeIs support new iron router 1.0.x and flow router
