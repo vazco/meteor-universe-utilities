@@ -1,4 +1,8 @@
 
+====1.2.0====
+-------------
+- set creates array instead of object when key is a number
+
 ====1.1.6====
 -------------
 - improvements for function getTemplateInstanceByDOM
