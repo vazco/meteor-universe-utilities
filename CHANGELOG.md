@@ -1,4 +1,8 @@
 
+====1.2.1====
+-------------
+- get can return falsy values
+
 ====1.2.0====
 -------------
 - set creates array instead of object when key is a number
