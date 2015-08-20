@@ -1,4 +1,8 @@
 
+====1.2.3====
+-------------
+- typo
+
 ====1.2.2====
 -------------
 - added UniUtils.formatCurrency
