@@ -1,4 +1,12 @@
 
+====1.2.3====
+-------------
+- typo
+
+====1.2.2====
+-------------
+- added UniUtils.formatCurrency
+
 ====1.2.1====
 -------------
 - get can return falsy values
