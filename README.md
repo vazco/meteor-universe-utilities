@@ -3,7 +3,7 @@
 ## Installation
 
 ```sh
-$ meteor add vazco:universe-utilities
+$ meteor add universe:utilities
 ```
 
 UniUtils.set - Creates an empty object inside namespace if not existent.
