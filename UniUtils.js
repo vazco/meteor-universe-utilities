@@ -56,7 +56,7 @@ UniUtils = {
      get(obj, 'ipsum.dolorem.sit');  // undefined
      * @returns {*} found property or undefined if property doesn't exist.
      */
-    function get (object, key, defaultValue) {
+    get: function (object, key, defaultValue) {
         if (typeof object !== 'object' || object === null) {
             return defaultValue;
         }
