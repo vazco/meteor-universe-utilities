@@ -8,10 +8,10 @@ $ meteor add universe:utilities
 
 UniUtils.set - Creates an empty object inside namespace if not existent.
 
-UniUtils.get - Returns nested property value.
+UniUtils.get - Returns nested key value.
 ```
 @param obj
-@param prop
+@param key
 @example var obj = {
         foo : {
             bar : 11
@@ -20,10 +20,10 @@ UniUtils.get - Returns nested property value.
 
  get(obj, 'foo.bar'); // "11"
  get(obj, 'ipsum.dolorem.sit');  // undefined
-@returns {*} found property or undefined if property doesn't exist.
+@returns {*} found key or undefined if key doesn't exist.
 ```
-UniUtils.has - Checks if object contains a child property.
-Useful for cases where you need to check if an object contain a nested property.
+UniUtils.has - Checks if object contains a child key.
+Useful for cases where you need to check if an object contain a nested key.
 
 UniUtils.findKey - Search key in object or array
 ```
@@ -64,7 +64,7 @@ But arguments for individual types can be different.
  .runOnce(name, function)
 ```
 UniConfig.private.runOnce - call function only once and save date about this in private config,
-but if function threw error or returned false. function will be not check as executed. 
+but if function threw error or returned false. function will be not check as executed.
 
 **UniConfig.users** - this one is dedicated for users, it's available on both sides but on client it contains only stuff for logged in user.
 

@@ -6,39 +6,45 @@ UniUtils = {
     /**
      * Creates an empty object inside namespace if not existent.
      * @param object
-     * @param {String} path
-     * @param {*} value in path. default is object if no matches in path
+     * @param {String} key
+     * @param {*} value in key. default is object if no matches in key
      * @example var obj = {};
      * set(obj, 'foo.bar'); // {}
      * console.log(obj);  // {foo:{bar:{}}}
      * @returns {*} it'll return created object or existing object.
      */
-    set: function (object, path, value) {
-        if (!_.isString(path)) {
-            console.log('Path must be type of String', 'error');
+    set: function (object, key, value) {
+        if (typeof key !== 'string') {
+            console.warn('Key must be string.');
             return object;
         }
-        var obj = object;
-        _.each(path.split('.'), function (key, index, list) {
-            if (!obj[key]) {
-                if (_.isFinite(+list[index + 1])) {
-                    obj[key] = [];
+
+        var keys = key.split('.');
+        var copy = object;
+
+        while (key = keys.shift()) {
+            if (copy[key] === undefined) {
+                if (+keys[0] === +keys[0]) {
+                    copy[key] = [];
                 } else {
-                    obj[key] = {};
+                    copy[key] = {};
                 }
             }
-            if (!_.isUndefined(value) && list.length === (index + 1)) {
-                obj[key] = value;
+
+            if (value !== undefined && keys.length === 0) {
+                copy[key] = value;
             }
-            obj = obj[key];
-        });
+
+            copy = copy[key];
+        }
+
         return object;
     },
 
     /**
      * Returns nested property value.
      * @param obj
-     * @param prop
+     * @param key
      * @param defaultValue {*=undefined}
      * @example var obj = {
         foo : {
@@ -50,39 +56,27 @@ UniUtils = {
      get(obj, 'ipsum.dolorem.sit');  // undefined
      * @returns {*} found property or undefined if property doesn't exist.
      */
-    get: function (obj, prop, defaultValue) {
-        if(!obj){
+    function get (object, key, defaultValue) {
+        if (typeof object !== 'object' || object === null) {
             return defaultValue;
         }
-        if (!_.isString(prop)) {
-            throw new Error('Parameter prop must be type of String');
+
+        if (typeof key !== 'string') {
+            throw new Error('Key must be string.');
         }
-        try {
-            var parts = prop.split('.');
-            var last;
 
-            if (_.isArray(parts)) {
-                last = parts.pop();
-            } else {
-                if (obj && obj[prop] !== undefined) {
-                    return obj[prop];
-                } else {
-                    return defaultValue;
-                }
+        var keys = key.split('.');
+        var last = keys.pop();
+
+         while (key = keys.shift()) {
+            object = object[key];
+
+            if (typeof object !== 'object' || object === null) {
+                return defaultValue;
             }
-
-            while (prop = parts.shift()) {
-                obj = obj[prop];
-                if (typeof obj !== 'object' || obj === null) {
-                    return defaultValue;
-                }
-            }
-
-            return (obj && obj[last] !== undefined ? obj[last] : defaultValue);
-        } catch(e){
-            console.warn(e.message);
-            return defaultValue;
         }
+
+        return object && object[last] !== undefined ? object[last] : defaultValue;
     },
 
     /**
