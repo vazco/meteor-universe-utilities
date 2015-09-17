@@ -85,13 +85,4 @@ but if function threw error or returned false. function will be not check as exe
 
 ```
 
-## Recommended variables
-To better project organisation, this package provides following variables:
-
-### App
-- space for application helpers and other stuff,
-
-### Colls
-- space for public collections in project
-
 ##And many more - check the source##
