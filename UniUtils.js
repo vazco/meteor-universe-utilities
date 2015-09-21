@@ -218,3 +218,9 @@ UniUtils = {
         return fields;
     }
 };
+
+// piece of code from: meteor/packages/mongo/collection.js
+var ALLOWED_UPDATE_OPERATIONS = {
+    $inc:1, $set:1, $unset:1, $addToSet:1, $pop:1, $pullAll:1, $pull:1,
+    $pushAll:1, $push:1, $bit:1
+};
