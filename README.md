@@ -8,6 +8,11 @@ $ meteor add universe:utilities
 
 UniUtils.set(object, pathInObject, value) - Creates an empty object inside namespace if not existent.
 
+```
+UniUtils.set({}, 'a.b.c', 'here');
+//output: Object {a:{b:{c:"here"}}}
+```
+
 UniUtils.get(object, pathInObject, defaultValue) - Returns nested key value.
 ```
 @param obj
@@ -34,9 +39,17 @@ UniUtils.findKey - Search key in object or array
 
 UniUtils.getFieldsFromUpdateModifier(modifier) - Gets array of top-level fields, which will be changed by modifier (this from update method)
 
+```
+UniUtils.getFieldsFromUpdateModifier({$set: {a:1, b:2, c:4}, $inc: {d:1}});
+// output: ["a", "b", "c", "d"]
+```
 
 UniUtils.getPreviewOfDocumentAfterUpdate(updateModifier, oldDoc = {}) Gets simulation of new version of document passed as a second argument
 
+```
+UniUtils.getPreviewOfDocumentAfterUpdate({$set: {a:1, b:2, c:4}, $inc: {d:1}}, {a:2});
+// output: Object {a: 1, b: 2, c: 4, d: 1}
+```
 
 ## UniConfig
 - provides a simple configuration mechanism.
