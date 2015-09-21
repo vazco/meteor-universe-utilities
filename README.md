@@ -6,9 +6,9 @@
 $ meteor add universe:utilities
 ```
 
-UniUtils.set - Creates an empty object inside namespace if not existent.
+UniUtils.set(object, pathInObject, value) - Creates an empty object inside namespace if not existent.
 
-UniUtils.get - Returns nested key value.
+UniUtils.get(object, pathInObject, defaultValue) - Returns nested key value.
 ```
 @param obj
 @param key
@@ -32,10 +32,11 @@ UniUtils.findKey - Search key in object or array
 @param context
 ```
 
-UniUtils.getParentTemplateInstance - Gets instance parent of current template it works everywhere where Template.instance() works
-```
-@param {string} templateName Name of template
-```
+UniUtils.getFieldsFromUpdateModifier(modifier) - Gets array of top-level fields, which will be changed by modifier (this from update method)
+
+
+UniUtils.getPreviewOfDocumentAfterUpdate(updateModifier, oldDoc = {}) Gets simulation of new version of document passed as a second argument
+
 
 ## UniConfig
 - provides a simple configuration mechanism.

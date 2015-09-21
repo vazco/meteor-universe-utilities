@@ -201,7 +201,7 @@ UniUtils = {
      */
     getFieldsFromUpdateModifier: function getFieldsFromUpdateModifier(updateModifier) {
         var fields = [];
-        Object.keys(updateModifier).forEach((op) => {
+        Object.keys(updateModifier).forEach(function(op) {
             if (ALLOWED_UPDATE_OPERATIONS[op] === 1) {
                 Object.keys(updateModifier[op]).forEach(function (field) {
                     if (field.indexOf('.') !== -1) {
@@ -216,6 +216,23 @@ UniUtils = {
             }
         });
         return fields;
+    },
+    /**
+     * Gets simulation of new version of document passed as a second argument
+     * @param updateModifier modifier from update method
+     * @param oldDoc default empty object
+     * @returns {*}
+     */
+    getPreviewOfDocumentAfterUpdate: function(updateModifier, oldDoc){
+        oldDoc = oldDoc || {};
+        var id = tmpCollection.insert(oldDoc);
+        tmpCollection.update(id, updateModifier);
+        var newDoc = tmpCollection.findOne(id);
+        if(id !== oldDoc._id){
+            delete newDoc._id;
+        }
+        tmpCollection.remove(id);
+        return newDoc;
     }
 };
 
@@ -224,3 +241,5 @@ var ALLOWED_UPDATE_OPERATIONS = {
     $inc:1, $set:1, $unset:1, $addToSet:1, $pop:1, $pullAll:1, $pull:1,
     $pushAll:1, $push:1, $bit:1
 };
+
+var tmpCollection = new Mongo.Collection();
