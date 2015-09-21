@@ -13,7 +13,7 @@ UniUtils = {
      * console.log(obj);  // {foo:{bar:{}}}
      * @returns {*} it'll return created object or existing object.
      */
-    set: function (object, key, value) {
+    set: function set(object, key, value) {
         if (typeof key !== 'string') {
             console.warn('Key must be string.');
             return object;
@@ -56,7 +56,7 @@ UniUtils = {
      get(obj, 'ipsum.dolorem.sit');  // undefined
      * @returns {*} found property or undefined if property doesn't exist.
      */
-    get: function (object, key, defaultValue) {
+    get: function get(object, key, defaultValue) {
         if (typeof object !== 'object' || object === null) {
             return defaultValue;
         }
@@ -68,7 +68,7 @@ UniUtils = {
         var keys = key.split('.');
         var last = keys.pop();
 
-         while (key = keys.shift()) {
+        while (key = keys.shift()) {
             object = object[key];
 
             if (typeof object !== 'object' || object === null) {
@@ -86,26 +86,26 @@ UniUtils = {
      * @param prop
      * @returns {boolean}
      */
-    has: function (obj, prop, hasOwnProperty) {
+    has: function has(obj, prop, hasOwnProperty) {
         if (!_.isString(prop)) {
             throw new Error('Parameter prop must be type of String');
         }
         var parts = prop.split('.');
 
         if (_.isArray(parts)) {
-           var last = parts.pop();
+            var last = parts.pop();
             while (prop = parts.shift()) {
                 obj = obj[prop];
                 if (typeof obj !== 'object' || obj === null) {
-                   return false;
+                    return false;
                 }
             }
-            if(hasOwnProperty){
+            if (hasOwnProperty) {
                 return _.has(obj, last);
             }
             return !!(obj && obj[last]);
         } else {
-            if(hasOwnProperty){
+            if (hasOwnProperty) {
                 return _.has(obj, prop);
             }
             return !!(obj && obj[prop]);
@@ -119,7 +119,7 @@ UniUtils = {
      * @param search predicate function or value
      * @param context
      */
-    findKey: function (obj, search, context) {
+    findKey         : function findKey(obj, search, context) {
         var result,
             isFunction = _.isFunction(search);
 
@@ -132,7 +132,7 @@ UniUtils = {
         });
         return result;
     },
-    getIdIfDocument: function (docId) {
+    getIdIfDocument : function getIdIfDocument(docId) {
         if (_.isObject(docId)) {
             return docId._id;
         }
@@ -141,11 +141,11 @@ UniUtils = {
     /**
      * @deprecated getUniUserObject is deprecated, please use ensureUniUser instead
      */
-    getUniUserObject: function(user, withoutLoggedIn){
-        if(!withoutLoggedIn){
+    getUniUserObject: function getUniUserObject(user, withoutLoggedIn) {
+        if (!withoutLoggedIn) {
             return UniUsers.ensureUniUser(user, Match.Any);
         }
-        return UniUsers.ensureUniUser(user||null, Match.Any);
+        return UniUsers.ensureUniUser(user || null, Match.Any);
     },
     /**
      * Compares documents and returns diff
@@ -153,10 +153,10 @@ UniUtils = {
      * @param doc2 against to.
      * @returns {{}}
      */
-    docDiff: function (doc1, doc2) {
+    docDiff         : function docDiff(doc1, doc2) {
         var diff = {};
         for (var k1 in doc1) {
-            if (!EJSON.equals(doc1[k1],doc2[k1])) {
+            if (!EJSON.equals(doc1[k1], doc2[k1])) {
                 diff[k1] = doc2[k1];
             }
         }
@@ -175,7 +175,7 @@ UniUtils = {
      * @param decimals{string}
      * @returns {string}
      */
-    formatCurrency: function (number, sections, decimals) {
+    formatCurrency             : function formatCurrency(number, sections, decimals) {
         var numberFormatMap = {
             'a': '\'',
             'c': ',',
@@ -193,5 +193,28 @@ UniUtils = {
 
             return digit;
         });
+    },
+    /**
+     * Gets array of top-level fields, which will be changed by modifier (this from update method)
+     * @param updateModifier modifier from update method
+     * @returns {Array} list of top-level from doc
+     */
+    getFieldsFromUpdateModifier: function getFieldsFromUpdateModifier(updateModifier) {
+        var fields = [];
+        Object.keys(updateModifier).forEach((op) => {
+            if (ALLOWED_UPDATE_OPERATIONS[op] === 1) {
+                Object.keys(updateModifier[op]).forEach(function (field) {
+                    if (field.indexOf('.') !== -1) {
+                        field = field.substring(0, field.indexOf('.'));
+                    }
+                    if (!_.contains(fields, field)) {
+                        fields.push(field);
+                    }
+                });
+            } else {
+                fields.push(op);
+            }
+        });
+        return fields;
     }
 };
