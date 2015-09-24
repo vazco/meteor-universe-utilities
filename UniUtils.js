@@ -242,4 +242,4 @@ var ALLOWED_UPDATE_OPERATIONS = {
     $pushAll:1, $push:1, $bit:1
 };
 
-var tmpCollection = new Mongo.Collection();
+var tmpCollection = new Mongo.Collection(null);
