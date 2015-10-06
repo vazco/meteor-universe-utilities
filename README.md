@@ -7,14 +7,17 @@ $ meteor add universe:utilities
 ```
 ## Functions
 
-### UniUtils.set(object, pathInObject, value) - Creates an empty object inside namespace if not existent.
+### UniUtils.set(object, pathInObject, value) 
+ Creates an empty object inside namespace if not existent.
 
 ```
 UniUtils.set({}, 'a.b.c', 'here');
 //output: Object {a:{b:{c:"here"}}}
 ```
 
-### UniUtils.get(object, pathInObject, defaultValue) - Returns nested key value.
+### UniUtils.get(object, pathInObject, defaultValue) 
+ Returns nested key value.
+
 ```
 @param obj
 @param key
@@ -28,24 +31,28 @@ UniUtils.set({}, 'a.b.c', 'here');
  get(obj, 'ipsum.dolorem.sit');  // undefined
 @returns {*} found key or undefined if key doesn't exist.
 ```
-### UniUtils.has - Checks if object contains a child key.
+### UniUtils.has 
+ Checks if object contains a child key.
 Useful for cases where you need to check if an object contain a nested key.
 
-### UniUtils.findKey - Search key in object or array
+### UniUtils.findKey 
+ Search key in object or array
 ```
 @param obj or array
 @param search predicate function or value
 @param context
 ```
 
-### UniUtils.getFieldsFromUpdateModifier(modifier) - Gets array of top-level fields, which will be changed by modifier (this from update method)
+### UniUtils.getFieldsFromUpdateModifier(modifier) 
+ Gets array of top-level fields, which will be changed by modifier (this from update method)
 
 ```
 UniUtils.getFieldsFromUpdateModifier({$set: {a:1, b:2, c:4}, $inc: {d:1}});
 // output: ["a", "b", "c", "d"]
 ```
 
-### UniUtils.getPreviewOfDocumentAfterUpdate(updateModifier, oldDoc = {}) Gets simulation of new version of document passed as a second argument
+### UniUtils.getPreviewOfDocumentAfterUpdate(updateModifier, oldDoc = {})
+ Gets simulation of new version of document passed as a second argument
 
 ```
 UniUtils.getPreviewOfDocumentAfterUpdate({$set: {a:1, b:2, c:4}, $inc: {d:1}}, {a:2});
