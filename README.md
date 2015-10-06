@@ -42,23 +42,6 @@ Useful for cases where you need to check if an object contain a nested key.
 @param search predicate function or value
 @param context
 ```
-
-### UniUtils.getFieldsFromUpdateModifier(modifier) 
- Gets array of top-level fields, which will be changed by modifier (this from update method)
-
-```
-UniUtils.getFieldsFromUpdateModifier({$set: {a:1, b:2, c:4}, $inc: {d:1}});
-// output: ["a", "b", "c", "d"]
-```
-
-### UniUtils.getPreviewOfDocumentAfterUpdate(updateModifier, oldDoc = {})
- Gets simulation of new version of document passed as a second argument
-
-```
-UniUtils.getPreviewOfDocumentAfterUpdate({$set: {a:1, b:2, c:4}, $inc: {d:1}}, {a:2});
-// output: Object {a: 1, b: 2, c: 4, d: 1}
-```
-
 ### UniUtils.deepExtend
 
 Recursive object extending.
@@ -168,6 +151,23 @@ Assigns enumerable own properties of source objects to the target object and ret
 - more here: ES6 spec - [Object.assign](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.assign)
 
 *- based on [sindresorhus/object-assign](https://github.com/sindresorhus/object-assign)*
+
+
+### UniUtils.getFieldsFromUpdateModifier(modifier) 
+ Gets array of top-level fields, which will be changed by modifier (this from update method)
+
+```
+UniUtils.getFieldsFromUpdateModifier({$set: {a:1, b:2, c:4}, $inc: {d:1}});
+// output: ["a", "b", "c", "d"]
+```
+
+### UniUtils.getPreviewOfDocumentAfterUpdate(updateModifier, oldDoc = {})
+ Gets simulation of new version of document passed as a second argument
+
+```
+UniUtils.getPreviewOfDocumentAfterUpdate({$set: {a:1, b:2, c:4}, $inc: {d:1}}, {a:2});
+// output: Object {a: 1, b: 2, c: 4, d: 1}
+```
 
 ## UniConfig
 - provides a simple configuration mechanism.
