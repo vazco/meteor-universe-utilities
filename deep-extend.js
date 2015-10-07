@@ -79,7 +79,7 @@ function deepCloneArray(arr) {
  * object as first argument, like this:
  *   deepExtend({}, yourObj_1, [yourObj_N]);
  */
-UniUtils.deepExtend = function deepExtend (/*obj_1, [obj_2], [obj_N]*/) {
+function deepExtend (/*obj_1, [obj_2], [obj_N]*/) {
     if (arguments.length < 1 || typeof arguments[0] !== 'object') {
         return false;
     }
@@ -142,3 +142,5 @@ UniUtils.deepExtend = function deepExtend (/*obj_1, [obj_2], [obj_N]*/) {
 
     return target;
 }
+
+UniUtils.deepExtend = deepExtend;
