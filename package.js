@@ -1,7 +1,7 @@
 Package.describe({
     summary: 'Many awesome utilities',
     name: 'universe:utilities',
-    version: '2.0.6',
+    version: '2.0.7',
     git: 'https://github.com/vazco/meteor-universe-utilities'
 });
 
@@ -18,7 +18,8 @@ Package.onUse(function (api) {
         'deep-extend.js',
         'deep-equal.js',
         'UniUtilsStrings.js',
-        'UniConfig.js'
+        'UniConfig.js',
+        'UniEmitter.js'
     ]);
 
     api.export([
