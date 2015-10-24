@@ -224,15 +224,19 @@ UniUtils = {
      * @returns {*}
      */
     getPreviewOfDocumentAfterUpdate: function(updateModifier, oldDoc){
-        oldDoc = oldDoc || {};
-        var id = tmpCollection.insert(oldDoc);
-        tmpCollection.update(id, updateModifier);
-        var newDoc = tmpCollection.findOne(id);
-        if(id !== oldDoc._id){
-            delete newDoc._id;
+        if (LocalCollection._modify) { 
+            return LocalCollection._modify(oldDoc, updateModifier);
+        } else{ // fallback if no _modify method
+            oldDoc = oldDoc || {};
+            var id = tmpCollection.insert(oldDoc);
+            tmpCollection.update(id, updateModifier);
+            var newDoc = tmpCollection.findOne(id);
+            if(id !== oldDoc._id){
+                delete newDoc._id;
+            }
+            tmpCollection.remove(id);
+            return newDoc;
         }
-        tmpCollection.remove(id);
-        return newDoc;
     }
 };
 
@@ -241,5 +245,6 @@ var ALLOWED_UPDATE_OPERATIONS = {
     $inc:1, $set:1, $unset:1, $addToSet:1, $pop:1, $pullAll:1, $pull:1,
     $pushAll:1, $push:1, $bit:1
 };
-
-var tmpCollection = new Mongo.Collection(null);
+if (!LocalCollection._modify) { // for fallback
+    var tmpCollection = new LocalCollection(null);
+}
