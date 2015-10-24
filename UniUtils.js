@@ -13,7 +13,7 @@ UniUtils = {
      * console.log(obj);  // {foo:{bar:{}}}
      * @returns {*} it'll return created object or existing object.
      */
-    set: function set(object, key, value) {
+    set: function set (object, key, value) {
         if (typeof key !== 'string') {
             console.warn('Key must be string.');
             return object;
@@ -56,7 +56,7 @@ UniUtils = {
      get(obj, 'ipsum.dolorem.sit');  // undefined
      * @returns {*} found property or undefined if property doesn't exist.
      */
-    get: function get(object, key, defaultValue) {
+    get: function get (object, key, defaultValue) {
         if (typeof object !== 'object' || object === null) {
             return defaultValue;
         }
@@ -86,7 +86,7 @@ UniUtils = {
      * @param prop
      * @returns {boolean}
      */
-    has: function has(obj, prop, hasOwnProperty) {
+    has: function has (obj, prop, hasOwnProperty) {
         if (!_.isString(prop)) {
             throw new Error('Parameter prop must be type of String');
         }
@@ -119,7 +119,7 @@ UniUtils = {
      * @param search predicate function or value
      * @param context
      */
-    findKey         : function findKey(obj, search, context) {
+    findKey: function findKey (obj, search, context) {
         var result,
             isFunction = _.isFunction(search);
 
@@ -132,7 +132,7 @@ UniUtils = {
         });
         return result;
     },
-    getIdIfDocument : function getIdIfDocument(docId) {
+    getIdIfDocument: function getIdIfDocument (docId) {
         if (_.isObject(docId)) {
             return docId._id;
         }
@@ -141,7 +141,7 @@ UniUtils = {
     /**
      * @deprecated getUniUserObject is deprecated, please use ensureUniUser instead
      */
-    getUniUserObject: function getUniUserObject(user, withoutLoggedIn) {
+    getUniUserObject: function getUniUserObject (user, withoutLoggedIn) {
         if (!withoutLoggedIn) {
             return UniUsers.ensureUniUser(user, Match.Any);
         }
@@ -153,7 +153,7 @@ UniUtils = {
      * @param doc2 against to.
      * @returns {{}}
      */
-    docDiff         : function docDiff(doc1, doc2) {
+    docDiff: function docDiff (doc1, doc2) {
         var diff = {};
         for (var k1 in doc1) {
             if (!EJSON.equals(doc1[k1], doc2[k1])) {
@@ -175,7 +175,7 @@ UniUtils = {
      * @param decimals{string}
      * @returns {string}
      */
-    formatCurrency             : function formatCurrency(number, sections, decimals) {
+    formatCurrency: function formatCurrency (number, sections, decimals) {
         var numberFormatMap = {
             'a': '\'',
             'c': ',',
@@ -199,9 +199,9 @@ UniUtils = {
      * @param updateModifier modifier from update method
      * @returns {Array} list of top-level from doc
      */
-    getFieldsFromUpdateModifier: function getFieldsFromUpdateModifier(updateModifier) {
+    getFieldsFromUpdateModifier: function getFieldsFromUpdateModifier (updateModifier) {
         var fields = [];
-        Object.keys(updateModifier).forEach(function(op) {
+        Object.keys(updateModifier).forEach(function (op) {
             if (ALLOWED_UPDATE_OPERATIONS[op] === 1) {
                 Object.keys(updateModifier[op]).forEach(function (field) {
                     if (field.indexOf('.') !== -1) {
@@ -223,28 +223,23 @@ UniUtils = {
      * @param oldDoc default empty object
      * @returns {*}
      */
-    getPreviewOfDocumentAfterUpdate: function(updateModifier, oldDoc){
-        if (LocalCollection._modify) { 
-            return LocalCollection._modify(oldDoc, updateModifier);
-        } else{ // fallback if no _modify method
-            oldDoc = oldDoc || {};
-            var id = tmpCollection.insert(oldDoc);
-            tmpCollection.update(id, updateModifier);
-            var newDoc = tmpCollection.findOne(id);
-            if(id !== oldDoc._id){
-                delete newDoc._id;
-            }
-            tmpCollection.remove(id);
-            return newDoc;
+    getPreviewOfDocumentAfterUpdate: function (updateModifier, oldDoc) {
+        oldDoc = oldDoc || {};
+        var id = tmpCollection.insert(oldDoc);
+        tmpCollection.update(id, updateModifier);
+        var newDoc = tmpCollection.findOne(id);
+        if (id !== oldDoc._id) {
+            delete newDoc._id;
         }
+        tmpCollection.remove(id);
+        return newDoc;
     }
 };
 
 // piece of code from: meteor/packages/mongo/collection.js
 var ALLOWED_UPDATE_OPERATIONS = {
-    $inc:1, $set:1, $unset:1, $addToSet:1, $pop:1, $pullAll:1, $pull:1,
-    $pushAll:1, $push:1, $bit:1
+    $inc: 1, $set: 1, $unset: 1, $addToSet: 1, $pop: 1, $pullAll: 1, $pull: 1,
+    $pushAll: 1, $push: 1, $bit: 1
 };
-if (!LocalCollection._modify) { // for fallback
-    var tmpCollection = new LocalCollection(null);
-}
+
+var tmpCollection = new LocalCollection(null);
