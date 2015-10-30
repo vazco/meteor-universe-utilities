@@ -128,7 +128,7 @@ if(Meteor.isServer){
             return obj.value;
         },
         getRow: function (name) {
-            return _configCollection.findOne({name: name, access: 'public'});
+            return _configCollection.findOne({name: name, access: 'private'});
         },
         runOnce: function (name, callback) {
             if (!UniConfig.private.get('runOne_' + name)) {
@@ -137,7 +137,7 @@ if(Meteor.isServer){
                     result = callback();
                 } catch (e) {
                     console.error(e);
-                    return;
+                    result = false;
                 }
                 if (result !== false) {
                     UniConfig.private.set('runOne_' + name, new Date());
