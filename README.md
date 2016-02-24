@@ -217,4 +217,17 @@ but if function threw error or returned false. function will be not check as exe
 
 ```
 
+- Writing Access in public scope
+Package will grant the writing access in client side for:
+    - every single user if this package is used without `universe:collection` package.
+    - but if `universe:collection` is added to the project **only admins can set records**
+    
+You can validate access right for client calls by registering own validator:  
+```#js
+    UniConfig.public.onAccessValidation(function(userId, settingObject, proposedResult){
+    var user = Meteor.users.findOne(userId);
+        return user && user.hasAccessForThis;
+    })
+```
+
 ##And many more - check the source##

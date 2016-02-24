@@ -156,6 +156,13 @@ if(Meteor.isServer){
     });
 
     _configCollection._ensureIndex({name:1, access:1}, {unique: 1});
+    UniConfig.public._accessValidators = [];
+    UniConfig.public.onAccessValidation = function onAccessValidation (accessValidator) {
+        if (accessValidator !== 'function') {
+            throw new Error('Access Validator must be a function');
+        }
+        UniConfig.public._accessValidators.push(accessValidator);
+    };
 
     var _checkRights = function(userId, doc){
         if(doc.isServerWriteOnly){
@@ -163,7 +170,20 @@ if(Meteor.isServer){
         }
         switch(doc.access){
             case 'public':
-                return true;
+                //For non universe environment we grant access for all
+                var result = true;
+                if (typeof UniUsers !== 'undefined'){
+                    result = UniUsers.isAdminLoggedIn();
+                }
+
+                if (UniConfig.public._accessValidators.length){
+                    result = UniConfig.public._accessValidators.every(function(fn){
+                        var res = fn(userId, doc, result);
+                        return res || res === undefined;
+                    });
+                }
+
+            return result;
             case 'private':
                 return false;
         }
@@ -175,6 +195,7 @@ if(Meteor.isServer){
         update: _checkRights,
         remove: _checkRights
     });
+
 } else{
     var _handleSub = Meteor.subscribe('UniConfig');
     UniConfig.ready = _handleSub.ready;
