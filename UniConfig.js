@@ -27,6 +27,11 @@ UniConfig = {
         },
         getRow: function(name){
            return _configCollection.findOne({name: name, access: 'public'});
+        },
+        find: function(selector, options) {
+            options = options || {};
+            selector = _.extend({access: 'public'}, selector||{});
+            return _configCollection.find(selector, options);
         }
     },
     users: {
@@ -68,6 +73,11 @@ UniConfig = {
         },
         getRow: function(name, userId){
             return _configCollection.findOne({name: name, access: userId});
+        },
+        find: function(selector, options) {
+            options = options || {};
+            selector = _.extend({access: 'public'}, selector||{});
+            return _configCollection.find(selector, options);
         }
     },
     onReady: function(cb){
@@ -129,6 +139,11 @@ if(Meteor.isServer){
         },
         getRow: function (name) {
             return _configCollection.findOne({name: name, access: 'private'});
+        },
+        find: function(selector, options) {
+            options = options || {};
+            selector = _.extend({access: 'public'}, selector||{});
+            return _configCollection.find(selector, options);
         },
         runOnce: function (name, callback) {
             if (!UniConfig.private.get('runOne_' + name)) {
