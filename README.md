@@ -257,7 +257,8 @@ You can validate access right for client calls by registering own validator:
 
 ## Licence
 This package is distributed under MIT
-Some of part of this package was based under:
+
+Some parts of this package was based under:
 - [substack/node-deep-equal](https://github.com/substack/node-deep-equal)
 - [unclechu/node-deep-extend](https://github.com/unclechu/node-deep-extend)
 - [nervgh/recursive-iterator] (https://github.com/nervgh/recursive-iterator)
