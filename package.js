@@ -1,13 +1,14 @@
 Package.describe({
     summary: 'Many awesome utilities',
     name: 'universe:utilities',
-    version: '2.2.2',
+    version: '2.3.0',
     git: 'https://github.com/vazco/meteor-universe-utilities'
 });
 
 Package.onUse(function (api) {
-    api.versionsFrom(['METEOR@1.1.0.3']);
+    api.versionsFrom(['METEOR@1.2']);
     api.use([
+        'ecmascript',
         'underscore',
         'minimongo',
         'tracker'
@@ -15,9 +16,9 @@ Package.onUse(function (api) {
 
     api.addFiles([
         'UniUtils.js',
-        'object-assign.js',
-        'deep-extend.js',
-        'deep-equal.js',
+        'RecursiveIterator.js',
+        'deepExtend.js',
+        'deepEqual.js',
         'UniUtilsStrings.js',
         'UniConfig.js',
         'UniEmitter.js'

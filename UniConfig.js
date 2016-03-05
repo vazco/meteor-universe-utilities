@@ -117,11 +117,9 @@ var _set = function(row){
 };
 
 if(Meteor.isServer){
-    UniConfig.ready = function(){
-        return true;
-    };
+    UniConfig.ready = () => true;
     UniConfig.private = {
-        set: function (name, value) {
+        set (name, value) {
             if (_.isUndefined(value)) {
                 return !!_configCollection.remove({name: name, access: 'private'});
             }
@@ -130,37 +128,64 @@ if(Meteor.isServer){
                 {name: name, value: value, access: 'private', lastModified: new Date()}
             );
         },
-        get: function (name, defaultValue) {
+        get (name, defaultValue) {
             var obj = _configCollection.findOne({name: name, access: 'private'});
             if (_.isUndefined(obj)) {
                 return defaultValue;
             }
             return obj.value;
         },
-        getRow: function (name) {
+        getRow (name) {
             return _configCollection.findOne({name: name, access: 'private'});
         },
-        find: function(selector, options) {
+        find (selector, options) {
             options = options || {};
             selector = _.extend({access: 'public'}, selector||{});
             return _configCollection.find(selector, options);
         },
-        runOnce: function (name, callback) {
+        runOnce (name, callback, isAsync) {
             if (!UniConfig.private.get('runOne_' + name)) {
-                var result;
+                var result, asyncWay = err => {
+                    if (err) {
+                        UniConfig.private.set('runOne_' + name);
+                    } else {
+                        UniConfig.private.set('runOne_' + name, new Date());
+                    }
+                    isAsync = true;
+                    console.log('Running once:', name, 'status: '+(err?'FAILED':'OK'), '(from async callback)');
+                };
                 try {
-                    result = callback();
+                    result = callback(asyncWay);
+                    if (result && typeof result.then === 'function') {
+                        isAsync = true;
+                        result.then(
+                            () => {
+                                UniConfig.private.set('runOne_' + name, new Date());
+                                console.log('Running once:', name, 'status: OK', '(from promise)');
+                            },
+                            () => {
+                                isAsync = true;
+                                UniConfig.private.set('runOne_' + name);
+                                console.log('Running once:', name, 'status: FAILED', '(from promise)');
+                            }
+                        );
+                    }
                 } catch (e) {
                     console.error(e);
                     result = false;
                 }
+                if (isAsync) {
+                    return;
+                }
                 if (result !== false) {
                     UniConfig.private.set('runOne_' + name, new Date());
                 }
-                console.log('Running once:', name, 'status: '+((result !== false)?'ok':'failed'));
+                console.log('Running once:', name, 'status: '+((result !== false)?'OK':'FAILED'));
             }
         }
     };
+    // short access
+    UniConfig.runOnce = UniConfig.private.runOnce;
 
     Meteor.publish('UniConfig', function () {
         var query = {access: 'public'};

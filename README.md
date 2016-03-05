@@ -35,6 +35,63 @@ UniUtils.set({}, 'a.b.c', 'here');
  Checks if object contains a child key.
 Useful for cases where you need to check if an object contain a nested key.
 
+### Recursive Iterator
+Iterates javascript object recursively.
+Works in ES6 environments [iteration protocols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
+Compatible with [for...of](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/for...of) cycle.
+```js
+var iterator = new UniUtils.RecursiveIterator(
+    root /*{Object|Array}*/,
+    // Method bypass of tree: `vertical` or `horizontal`
+    [bypassMode="vertical"] /*{String}*/, 
+    [ignoreCircular=false] /*{Boolean}*/,
+    [maxDeep=100] /*{Number}*/
+);
+
+var {value, done} = iterator.next();
+var {parent, node, key, path, deep} = value;
+
+// parent is parent node
+// node is current node
+// key is key of node
+// path is path to node
+// deep is current deep
+```
+
+- `iterator.isNode(node);`
+Returns `true` if any is node (as a default node is `{Object}`).
+
+- `iterator.isLeaf(node);`
+Returns `true` if node is leaf. Leaf is all primitive types.
+
+- `iterator.isCircular(node);`
+Returns `true` if object is circular reference.
+
+- `iterator.onStepInto(state); // state = iterator.next();`
+It calls for each node. If returns `false` node will be skipped.
+You can override this function, if you need to have custom behavior
+
+
+
+
+### Example (es6)
+```js
+var root = {
+    object: {
+        number: 1
+    },
+    string: 'foo'
+};
+
+for(let {node, path} of new UniUtils.RecursiveIterator(root)) {
+    console.log(path.join('.'), node);
+}
+
+// object    Object {number: 1}
+// object.number    1
+// string    foo
+```
+
 ### UniUtils.findKey 
  Search key in object or array
 ```
@@ -95,8 +152,6 @@ console.log(obj1);
 */
 ```
 
-*- based on [unclechu/node-deep-extend](https://github.com/unclechu/node-deep-extend)*
-
 ### UniUtils.deepEqual
 
 Node's assert.deepEqual() algorithm as a standalone module.
@@ -120,38 +175,6 @@ console.dir([
 Compare objects a and b, returning whether they are equal according to a recursive equality algorithm.
 
 If opts.strict is true, use strict equality (===) to compare leaf nodes. The default is to use coercive equality (==) because that's how assert.deepEqual() works by default.
-
-*- based on [substack/node-deep-equal](https://github.com/substack/node-deep-equal)*
-
-### UniUtils.assign
-
-Ponyfill: A polyfill that doesn't overwrite the native method and use native if available
-
-```js
-UniUtils.assign({foo: 0}, {bar: 1});
-//=> {foo: 0, bar: 1}
-
-// multiple sources
-UniUtils.assign({foo: 0}, {bar: 1}, {baz: 2});
-//=> {foo: 0, bar: 1, baz: 2}
-
-// overwrites equal keys
-UniUtils.assign({foo: 0}, {foo: 1}, {foo: 2});
-//=> {foo: 2}
-
-// ignores null and undefined sources
-UniUtils.assign({foo: 0}, null, {bar: 1}, undefined);
-//=> {foo: 0, bar: 1}
-```
-
-**UniUtils.assign(target, source, [source, ...])**
-
-Assigns enumerable own properties of source objects to the target object and returns the target object. Additional source objects will overwrite previous ones.
-
-- more here: ES6 spec - [Object.assign](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.assign)
-
-*- based on [sindresorhus/object-assign](https://github.com/sindresorhus/object-assign)*
-
 
 ### UniUtils.getFieldsFromUpdateModifier(modifier) 
  Gets array of top-level fields, which will be changed by modifier (this from update method)
@@ -230,4 +253,11 @@ You can validate access right for client calls by registering own validator:
     })
 ```
 
-##And many more - check the source##
+## And many more - check the source#
+
+## Licence
+This package is distributed under MIT
+Some of part of this package was based under:
+- [substack/node-deep-equal](https://github.com/substack/node-deep-equal)
+- [unclechu/node-deep-extend](https://github.com/unclechu/node-deep-extend)
+- [nervgh/recursive-iterator] (https://github.com/nervgh/recursive-iterator)
