@@ -233,7 +233,11 @@ UniUtils = {
         }
         tmpCollection.remove(id);
         return newDoc;
-    }
+    },
+    /**
+     * @deprecated please use Object assign instead.
+     */
+    assign: Object.assign.bind(Object)
 };
 
 // piece of code from: meteor/packages/mongo/collection.js
