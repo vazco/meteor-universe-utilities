@@ -133,7 +133,7 @@ UniUtils.RecursiveIterator = class RecursiveIterator {
     }
 };
 
-const GLOBAL_OBJECT = new Function('return this')();
+const GLOBAL_OBJECT = Meteor.isServer ? global : window;
 
 /**
  * @param {*} any
