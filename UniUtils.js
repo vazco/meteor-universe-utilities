@@ -139,15 +139,6 @@ UniUtils = {
         return docId;
     },
     /**
-     * @deprecated getUniUserObject is deprecated, please use ensureUniUser instead
-     */
-    getUniUserObject: function getUniUserObject (user, withoutLoggedIn) {
-        if (!withoutLoggedIn) {
-            return UniUsers.ensureUniUser(user, Match.Any);
-        }
-        return UniUsers.ensureUniUser(user || null, Match.Any);
-    },
-    /**
      * Compares documents and returns diff
      * @param doc1 document will be compared against to document in doc2 parameter.
      * @param doc2 against to.
