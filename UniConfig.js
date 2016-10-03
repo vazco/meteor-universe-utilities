@@ -1,6 +1,6 @@
 'use strict';
 /* global UniConfig: true */
-var _configCollection = new Meteor.Collection('universe_configs');
+var _configCollection = new Mongo.Collection('universe_configs');
 UniConfig = {
     public:{
         set: function(name, value, isServerWriteOnly){

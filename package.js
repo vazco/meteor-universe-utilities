@@ -1,7 +1,7 @@
 Package.describe({
     summary: 'Many awesome utilities',
     name: 'universe:utilities',
-    version: '2.3.2',
+    version: '2.3.3',
     git: 'https://github.com/vazco/meteor-universe-utilities'
 });
 
@@ -11,7 +11,8 @@ Package.onUse(function (api) {
         'ecmascript',
         'underscore',
         'minimongo',
-        'tracker'
+        'tracker',
+        'mongo'
     ]);
 
     api.addFiles([
