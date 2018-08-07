@@ -1,4 +1,8 @@
-# Universe Utilities
+<h1 align="center">
+    <a href="https://github.com/vazco">vazco</a>/Universe Utilities
+</h1>
+
+&nbsp;
 
 ## Installation
 
@@ -256,9 +260,12 @@ You can validate access right for client calls by registering own validator:
 ## And many more - check the source#
 
 ## Licence
-This package is distributed under MIT
 
 Some parts of this package was based under:
 - [substack/node-deep-equal](https://github.com/substack/node-deep-equal)
 - [unclechu/node-deep-extend](https://github.com/unclechu/node-deep-extend)
 - [nervgh/recursive-iterator] (https://github.com/nervgh/recursive-iterator)
+
+<img src="https://vazco.eu/banner.png" align="right">
+
+**Like every package maintained by [Vazco](https://vazco.eu/), Universe Utilities is [MIT licensed](https://github.com/vazco/uniforms/blob/master/LICENSE).**
