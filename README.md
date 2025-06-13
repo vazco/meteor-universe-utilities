@@ -2,7 +2,7 @@
     <a href="https://github.com/vazco">vazco</a>/Universe Utilities
 </h1>
 
-&nbsp;
+**[Deprecated] This project is no longer maintained.**
 
 ## Installation
 
